@@ -1,4 +1,4 @@
-###Introduction
+#Introduction
 In this lab we will walkthrough on detecting road surface damanage using SSD model and deploy it on Amazon Deeplens. 
 
 Object detection is the process of identifying and localizing objects in an image. A typical object detection solution takes in an image as input and provides a bounding box on the image where an object of interest is, along with identifying what object the box encapsulates. We will be using this model developed in Tensorflow.  We will show you deploy this model

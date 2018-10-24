@@ -7,8 +7,7 @@ on Deeplens and do inferencing that will detect and classifiy road surface daman
 ### The Definition of Road Damage
 
 image []
-![Image description](link-to-image)
-
+![Image description](images/RoadDamageTypeDef.png)
 
 ## First download pre-built model
  

@@ -6,12 +6,11 @@ on Deeplens and do inferencing that will detect and classifiy road surface daman
 
 ### The Definition of Road Damage
 
-image []
-![Image description](images/RoadDamageTypeDef.png)
+![Here is definition of different types of Road Damanges](images/RoadDamageTypeDef.png)
 
 ## First download pre-built model
  
-[trainedModel](https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz)
+![trainedModel](https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz)
 
 the download file has model files frozen graph of the model (ssd_inception_RoadDamageDetector.pb and ssd_mobilenet_RoadDamageDetector.pb ) and a label map for the model (crack_label_map.pbtxt). We will be using ssd_inception_RoadDamageDetector model.
 
@@ -44,6 +43,8 @@ sudo pip install tensorflow==1.5.0
 In this section, you will upload the tar file to Amazon S3 so the AWS DeepLens service can deploy it to the DeepLens device for local inference.
 
 Open the AmazonS3 console.
+!(images/image2.png)
+
 
 Create an Amazon S3 bucket in the Northern Virginia Region that ***must contain the term “deeplens”***. The AWS DeepLens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-tfmodel-yourinitials
 

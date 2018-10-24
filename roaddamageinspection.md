@@ -65,15 +65,15 @@ Open the AWS Lambda console.
 
 Create a new function from a blueprint, make sure to search for AWS Greengrass and select the Python version.
 
-![](images/image3.png)
+![](images/image3.gif)
 
 Give the function a meaning name and select AWSDeepLensLambdaRole from Existing role drop-down list. Then create the function. Note: If you do not see this role, make sure that you registered your AWS DeepLens device. The role is automatically created during the registration process.
 
-![](images/image4.png)
+![](images/image4.gif)
 
 In the function editor, copy and paste the following code into greengrassHelloWorld.py. 
 
-![](images/image5.png)
+![](images/image5.gif)
 
 ***Note: Do not rename the file or the function handler, leave everything at the default.
 
@@ -187,7 +187,7 @@ To publish a Lambda function, choose ***Actions*** and select ***Publish*** new 
 
 Give a description to the published version and choose Publish.
 
-![](images/image6.png)
+![](images/image6.gif)
 
 
 #### Setting up an AWS DeepLens project and deploying a custom TensorFlow object detection model
@@ -204,16 +204,16 @@ Give a description to the published version and choose Publish.
 
 6. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
 
-![](images/image8.png)
+![](images/image8.gif)
 
 In the left navigation panel, choose Project. Then choose Create new project.
 
-![](images/image9.png)
+![](images/image9.gif)
 
 
 Create a new blank project.
 
-![](images/image10.png)
+![](images/image10.gif)
 
 
 Give your project a meaningful name and description, and then choose Add model.
@@ -228,7 +228,7 @@ Select the model that you imported earlier, and then choose Add model.
 
 On the project detail page, choose Add function.
 
-![](images/image13.png)
+![](images/image13.gif)
 
 Choose the Lambda function you created earlier, then choose Add function.
 
@@ -239,7 +239,7 @@ Select the AWS DeepLens device that you want to deploy the project to, choose Re
 
 The status pane at the top of the screen displays deployment progress. Wait until it turns green and displays status that the deployment succeeded.
 
-![](images/image16.png)
+![](images/image16.gif)
 
 In the Device details pane, copy the MQTT topic, and then navigate to the AWS IoT console.
 

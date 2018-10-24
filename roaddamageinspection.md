@@ -242,7 +242,7 @@ The status pane at the top of the screen displays deployment progress. Wait unti
 In the Device details pane, copy the MQTT topic, and then navigate to the AWS IoT console.
 
 
-![](images/image17.png)
+![](images/image17.gif)
 
 In the AWS IoT console, in the left navigation pane choose Test, paste the MQTT topic copied in the previous step, then choose Subscribe to topic.
 

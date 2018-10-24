@@ -249,7 +249,7 @@ In the AWS IoT console, in the left navigation pane choose Test, paste the MQTT 
 
 Detected objects and their prediction confidence score are sent in real time through MQTT to the AWS IoT platform.
 
-Conclusion
+### Conclusion
 
 In this lab, you learned how to deploy a Road Surface Damage detection model to AWS DeepLens. This enables AWS DeepLens to perform real-time object detection using the built-in camera. You can see that it’s possible to use AWS services to build some very powerful AI solutions. 
 

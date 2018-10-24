@@ -49,21 +49,33 @@ Open the AmazonS3 console.
 ![](images/image2.png)
 
 
-Create an Amazon S3 bucket in the Northern Virginia Region that ***must contain the term “deeplens”***. The AWS DeepLens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-tfmodel-yourinitials
+Create an Amazon S3 bucket in the Northern Virginia Region that ***must contain the term “deeplens”***. 
+
+The AWS DeepLens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-tfmodel-yourinitials
 
 After the bucket is created, upload the tar file to the bucket.
 
 ### Create lambda function
 
-In this section, you’ll create a custom Lambda function that will be deployed as part of the AWS DeepLens deployment. This Lambda function contains code to load the custom TensorFlow model that was downloaded from the S3 bucket mentioned previously. This allows you to perform local inferencing (object detection) without connecting back to the AWS Cloud.
+In this section, you’ll create a custom Lambda function that will be deployed as part of the AWS DeepLens deployment. 
+
+This Lambda function contains code to load the custom model that was downloaded from the S3 bucket mentioned previously. This allows you to perform local inferencing (object detection) without connecting back to the AWS Cloud.
 
 Open the AWS Lambda console.
+
 Create a new function from a blueprint, make sure to search for AWS Greengrass and select the Python version.
-[Lambda Console](!tensorflow-object-detection-Lambda-console.jpg)
+
+![](images/image3.png)
 
 Give the function a meaning name and select AWSDeepLensLambdaRole from Existing role drop-down list. Then create the function. Note: If you do not see this role, make sure that you registered your AWS DeepLens device. The role is automatically created during the registration process.
 
-In the function editor, copy and paste the following code into greengrassHelloWorld.py. Note: Do not rename the file or the function handler, leave everything at the default.
+![](images/image4.png)
+
+In the function editor, copy and paste the following code into greengrassHelloWorld.py. 
+
+![](images/image5.png)
+
+***Note: Do not rename the file or the function handler, leave everything at the default.
 
 ```python
 # Import packages
@@ -165,76 +177,79 @@ def function_handler(event, context):
 ```
 
 Save the Lambda function.
-To ensure code integrity and consistency, AWS DeepLens only works with the published version of a Lambda function. To publish a Lambda function, choose ***Actions*** and select ***Publish*** new version.
 
-!(image)
+
+To ensure code integrity and consistency, AWS DeepLens only works with the published version of a Lambda function. 
+
+To publish a Lambda function, choose ***Actions*** and select ***Publish*** new version.
+
+![](images/image2.png)
+
 Give a description to the published version and choose Publish.
 
+![](images/image6.png)
 
 
 #### Setting up an AWS DeepLens project and deploying a custom TensorFlow object detection model
 
-Open the AWS DeepLens console.
+1. Open the AWS DeepLens console.
 
-Make sure your DeepLens device is registered before you begin. You can follow this link for a step-by-step guide to register the device.
+2. Make sure your DeepLens device is registered before you begin. You can follow this ![link](https://youtu.be/j0DkaM4L6n4)  for a step-by-step guide to register the device.
 
-Make sure TensorFlow 1.5 is installed on the device for Python 2.7. Installation instructions are in prerequisites section.
+3. Make sure TensorFlow 1.5 is installed on the device for Python 2.7. Installation instructions are in prerequisites section.
 
-Make sure you are in the same region where you created the S3 bucket. At the time of writing, AWS DeepLens is only available in the Northern Virginia Region.
+4. Make sure you are in the same region where you created the S3 bucket. At the time of writing, AWS DeepLens is only available in the Northern Virginia Region.
 
-In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
+5. In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
 
-On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
+6. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
 
-image
+![](images/image8.png)
 
 In the left navigation panel, choose Project. Then choose Create new project.
 
-image
+![](images/image9.png)
+
 
 Create a new blank project.
 
-image
+![](images/image10.png)
+
 
 Give your project a meaningful name and description, and then choose Add model.
 
 In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
+
 On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
 
-image new
 
 Select the model that you imported earlier, and then choose Add model.
 
-image new
 
 On the project detail page, choose Add function.
 
-image new
+![](images/image13.png)
 
 Choose the Lambda function you created earlier, then choose Add function.
 
-image new
-
 Choose Create to create the project. On the project page, select the new project that you just set up, and choose Deploy to device.
 
-image new
 
 Select the AWS DeepLens device that you want to deploy the project to, choose Review, and then chose Deploy. The deployment process will take few minutes because the AWS DeepLens device needs to download the model tar file from S3 and the Lambda function to execute locally on the device.
+
 The status pane at the top of the screen displays deployment progress. Wait until it turns green and displays status that the deployment succeeded.
 
-image new
+![](images/image16.png)
 
 In the Device details pane, copy the MQTT topic, and then navigate to the AWS IoT console.
 
-image new
+
+![](images/image17.png)
 
 In the AWS IoT console, in the left navigation pane choose Test, paste the MQTT topic copied in the previous step, then choose Subscribe to topic.
 
-image new
 
 Detected objects and their prediction confidence score are sent in real time through MQTT to the AWS IoT platform.
-
-image new
 
 Conclusion
 

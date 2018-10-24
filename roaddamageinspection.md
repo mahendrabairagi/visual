@@ -22,6 +22,7 @@ The following sections walk you through the implementation steps in detail.
 
 
 #### Step 1: Prerequisites
+
 Make sure to register your AWS DeepLens device before you begin. You can follow this ![link](https://youtu.be/j0DkaM4L6n4) for a step-by-step guide to register the device.
 
 TensorFlow 1.5 is not yet installed on the device in Python 2.7. Open terminal of Deeplens or SSH to Deeplens and execute the following command to install TensorFlow.

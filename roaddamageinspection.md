@@ -45,7 +45,7 @@ sudo pip install tensorflow==1.5.0
 In this section, you will upload the tar file to Amazon S3 so the AWS DeepLens service can deploy it to the DeepLens device for local inference.
 
 Open the AmazonS3 console.
-!(images/image2.png)
+![](images/image2.png)
 
 
 Create an Amazon S3 bucket in the Northern Virginia Region that ***must contain the term “deeplens”***. The AWS DeepLens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-tfmodel-yourinitials

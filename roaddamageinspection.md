@@ -10,7 +10,9 @@ on Deeplens and do inferencing that will detect and classifiy road surface daman
 
 ## First download pre-built model
  
-![trainedModel](https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz)
+Click link below to download
+
+https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz
 
 the download file has model files frozen graph of the model (ssd_inception_RoadDamageDetector.pb and ssd_mobilenet_RoadDamageDetector.pb ) and a label map for the model (crack_label_map.pbtxt). We will be using ssd_inception_RoadDamageDetector model.
 

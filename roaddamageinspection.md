@@ -262,5 +262,3 @@ If you use or find out our dataset useful, please cite our paper in the journal 
 Maeda, H., Sekimoto, Y., Seto, T., Kashiyama, T., & Omata, H. Road Damage Detection and Classification Using Deep Neural Networks with Smartphone Images. Computer‐Aided Civil and Infrastructure Engineering.
 
 @article{maedaroad, title={Road Damage Detection and Classification Using Deep Neural Networks with Smartphone Images}, author={Maeda, Hiroya and Sekimoto, Yoshihide and Seto, Toshikazu and Kashiyama, Takehiro and Omata, Hiroshi}, journal={Computer-Aided Civil and Infrastructure Engineering}, publisher={Wiley Online Library} }
-
-arXiv version is here.

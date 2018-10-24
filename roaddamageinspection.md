@@ -10,9 +10,7 @@ on Deeplens and do inferencing that will detect and classifiy road surface daman
 
 ## First download pre-built model
  
-Click link below to download
-
-https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz
+Click link below to [download](https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz)
 
 the download file has model files frozen graph of the model (ssd_inception_RoadDamageDetector.pb and ssd_mobilenet_RoadDamageDetector.pb ) and a label map for the model (crack_label_map.pbtxt). We will be using ssd_inception_RoadDamageDetector model.
 
@@ -23,7 +21,7 @@ The following sections walk you through the implementation steps in detail.
 
 #### Step 1: Prerequisites
 
-Make sure to register your AWS DeepLens device before you begin. You can follow this ![link](https://youtu.be/j0DkaM4L6n4) for a step-by-step guide to register the device.
+Make sure to register your AWS DeepLens device before you begin. You can follow this [link](https://docs.aws.amazon.com/deeplens/latest/dg/deeplens-getting-started-register.html) for a step-by-step guide to register the device.
 
 TensorFlow 1.5 is not yet installed on the device in Python 2.7. Open terminal of Deeplens or SSH to Deeplens and execute the following command to install TensorFlow.
 
@@ -194,7 +192,7 @@ Give a description to the published version and choose Publish.
 
 1. Open the AWS DeepLens console.
 
-2. Make sure your DeepLens device is registered before you begin. You can follow this ![link](https://youtu.be/j0DkaM4L6n4)  for a step-by-step guide to register the device.
+2. Make sure your DeepLens device is registered before you begin. You can follow this [link](https://youtu.be/j0DkaM4L6n4)  for a step-by-step guide to register the device.
 
 3. Make sure TensorFlow 1.5 is installed on the device for Python 2.7. Installation instructions are in prerequisites section.
 

@@ -11,7 +11,8 @@ In this lab I will walk you through how to create road surface anomaly detection
 5. Convert model for Deeplens compatibility
 6. Save model so that it can be used in Deeplens project.
 
-### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. You can download it from here. If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
+### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. You can download it from [here](https://s3.amazonaws.com/deeplens-crackedroad/road_damage_detector_dataset.tar.gz).
+If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
 
 Detecting road surface damage needs detecting multiple objects in the image frame. So we will need to build object detection model.
 

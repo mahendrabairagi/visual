@@ -1,8 +1,7 @@
 ### Introduction
 In this lab we will walkthrough detecting road surface damage using SSD model and deploy it on Amazon Deeplens. 
 
-Object detection is the process of identifying and localizing objects in an image. A typical object detection solution takes in an image as input and provides a bounding box on the image where an object of interest is, along with identifying what object the box encapsulates. We will be using this model developed using AWS Sagemaker.  We will show you how to deploy this model
-on Deeplens and do inferencing that will detect and classifiy road surface damange.
+Object detection is the process of identifying and localizing objects in an image. A typical object detection solution takes in an image as input and provides a bounding box on the image where an object of interest is, along with identifying what object the box encapsulates. We will be using this model developed using AWS Sagemaker.  We will show you how to deploy this model on Deeplens and do inferencing that will detect and classifiy road surface damange.
 
 ### The Definition of Road Damage
 
@@ -21,18 +20,18 @@ The following sections walk you through the implementation steps.
 
 #### Step 1: Prerequisites
 
-Make sure to register your AWS DeepLens device before you begin. You can follow this [link](https://docs.aws.amazon.com/deeplens/latest/dg/deeplens-getting-started-register.html) for a step-by-step guide to register the device.
+Make sure to register your AWS Deeplens device before you begin. You can follow this [link](https://docs.aws.amazon.com/deeplens/latest/dg/deeplens-getting-started-register.html) for a step-by-step guide to register the device.
 
 
 #### Step 2: Upload the downloaded model file to Amazon S3
 
-In this section, you will upload the tar file to Amazon S3 so the AWS DeepLens service can deploy it to the DeepLens device for local inference.
+In this section, you will upload the tar file to Amazon S3 so the AWS DeepLens service can deploy it to the Deeplens device for local inference.
 
 Open the AmazonS3 console.
 ![](images/image2.png)
 
 
-Create an Amazon S3 bucket in the Northern Virginia Region that *** bucket nanme must start with the term *** “deeplens” ***. 
+Create an Amazon S3 bucket in the Northern Virginia Region that *** bucket name must start with the term *** “deeplens” ***. 
 
 The AWS Deeplens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-roaddamagedetection-yourinitials
 
@@ -50,7 +49,7 @@ Create a new function from a blueprint, make sure to search for AWS Greengrass a
 
 ![](images/image3.gif)
 
-Give the function a meaning name and select AWSDeepLensLambdaRole from Existing role drop-down list. Then create the function. Note: If you do not see this role, make sure that you registered your AWS DeepLens device. The role is automatically created during the registration process.
+Give the function a meaningful name and select AWSDeepLensLambdaRole from Existing role drop-down list. Then create the function. Note: If you do not see this role, make sure that you registered your AWS DeepLens device. The role is automatically created during the registration process.
 
 ![](images/image4.gif)
 
@@ -208,7 +207,7 @@ Detected objects and their prediction confidence score are sent in real time thr
 
 ### Conclusion
 
-In this lab, you learned how to deploy a Road Surface Damage detection model to AWS DeepLens. This enables AWS DeepLens to perform real-time object detection using the built-in camera. You can see that it’s possible to use AWS services to build some very powerful AI solutions. 
+In this lab, you learned how to deploy a Road Surface Damage detection model to AWS DeepLens. This enables AWS Deeplens to perform real-time object detection using the built-in camera. You can see that it’s possible to use AWS services to build some very powerful AI solutions. 
 
 
 ### Citation:

@@ -12,10 +12,13 @@ In this lab I will walk you through how to create road surface anomaly detection
 6. Save model so that it can be used in Deeplens project.
 
 ### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. 
+
+If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
+
+You can download dataset from [here](https://s3.amazonaws.com/deeplens-crackedroad/road_damage_detector_dataset.tar.gz).
+
 <details> <summary>Click below if you want to see how to collect and annotate dataset </summary>
 
-You can download it from [here](https://s3.amazonaws.com/deeplens-crackedroad/road_damage_detector_dataset.tar.gz).
-If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
 
 Detecting road surface damage needs detecting multiple objects in the image frame. So we will need to build object detection model.
 
@@ -229,11 +232,15 @@ Now your dataset is ready for model building.
 ### Step 2. Uploading dataset to AWS
 
 
-Create an AWS S3 bucket to store the dataset, Then copy folders train, validation, train_annotation, and validation_annoatation to the S3. Here is [guide](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html) to help you create S3 bucket.
+First you will need to create an AWS S3 bucket to store the dataset, Then copy folders train, validation, train_annotation, and validation_annoatation to the S3. 
 
-To create an S3 Bucket, navigate to the S3 storage services and select "Create Bucket". Enter the bucket name, our name for the first model that worked was "deeplens-roaddamagedetection". Be sure to select the region that is the same as the IAM role you are using, and where your notebook instance will be running.
-We first need to create a the folder "roaddamagedetection". 
-If you downloaded the dataset tar file from my link above then untar or unzip the file. You will see four folders rain, validation, train_annoation, and validation_annotation. Uploade thse folders inside "roaddamagedetection" folder.
+To create an S3 Bucket, navigate to the S3 storage services and select "Create Bucket". Enter the bucket name,e.g. "deeplens-roaddamagedetection". Be sure to select the region that is the same as the IAM role you are using, and where your notebook instance will be running.
+
+Here is [guide](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html) to help you create S3 bucket.
+
+We first need to create a folder "roaddamagedetection" to store the dataset folders
+
+If you downloaded the dataset tar file from my link above then untar or unzip the file. You will see four folders train, validation, train_annoation, and validation_annotation. Uploade thse folders inside "roaddamagedetection" folder.
 
 If you created the dataset mannually then upload your train, validation, train_annoation, and validation_annotation folders under "roaddamagedetection" folder. We now have all the data for our custom model uploaded into an S3 Bucket.
 
@@ -253,11 +260,18 @@ To open terminal. On Sagemaker Jupyter notebook, click "New" on the left side, i
 ![Sagemaker terminal](images/terminal.png)
 Once terminal is open. Clone git as below
 ```
+cd SageMaker
+
 git clone https://github.com/mahendrabairagi/visual.git
 
 ```
+Go back to main page for Sagemaker, you will see folder called "visual" in the git 
 
-This notebook
+Under the files you will see "object_detection_image_json_format-roaddamage-no_endpoint.ipynb"
+
+You will see this [notebook](object_detection_image_json_format-roaddamage-no_endpoint.ipynb).
+
+
 ### Modifying the sample notebook
 
 

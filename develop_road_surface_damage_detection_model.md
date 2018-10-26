@@ -11,7 +11,10 @@ In this lab I will walk you through how to create road surface anomaly detection
 5. Convert model for Deeplens compatibility
 6. Save model so that it can be used in Deeplens project.
 
-### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. You can download it from [here](https://s3.amazonaws.com/deeplens-crackedroad/road_damage_detector_dataset.tar.gz).
+### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. 
+<details> <summary>Click below if you want to see how to collect and annotate dataset </summary>
+
+You can download it from [here](https://s3.amazonaws.com/deeplens-crackedroad/road_damage_detector_dataset.tar.gz).
 If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
 
 Detecting road surface damage needs detecting multiple objects in the image frame. So we will need to build object detection model.
@@ -220,6 +223,8 @@ create_files("output_name.csv", "train")
 You should now have a folder containing all the json files with annotations for each image! The final step to preprocess the data is to split your images and annoatations into train and validation folders. First, create folders train, validation, train_annotation, and validation_annoatation. Then split up your images and json files into train and validation categories. You want many more training images than validation images. I manually copied split training and validation images to 70-30%. Put your training images into the train directory, and the corresponding json files into the train_annoation directory. Do the same with your validation data for the validation and validation_annoataion directories. Your data is now all preprocessed! The next step is to move onto AWS to begin training. 
 
 Now your dataset is ready for model building.
+
+</details>
 
 ### Step 2. Uploading dataset to AWS
 

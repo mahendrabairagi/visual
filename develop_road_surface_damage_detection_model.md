@@ -5,13 +5,14 @@ In this lab I will walk you through how to create road surface anomaly detection
 ### Objectives are :
 
 1. Collect and annotate dataset
-2. Setup AWS Sagemaker
-3. Build model
-4. Convert model for Deeplens compatibility
-5. Save model so that it can be used in Deeplens project.
+2. Upload dataset to S3
+3. Setup AWS Sagemaker
+4. Build model
+5. Convert model for Deeplens compatibility
+6. Save model so that it can be used in Deeplens project.
 
 ####
-1. Collect and annotate dataset
+1. Collect and annotate dataset ### *** This is optional step. I already have created dataset and its ready for you to use in Sagemaker. You can download it from here. If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
 
 Detecting road surface damage needs detecting multiple objects in the image frame. So we will need to build object detection model.
 
@@ -220,14 +221,18 @@ You should now have a folder containing all the json files with annotations for 
 
 Now your dataset is ready for model building.
 
-#### **Uploading to AWS**
+#### Step 2. Uploading to AWS
 
 
 Create an AWS S3 bucket to store the dataset, Then copy folders train, validation, train_annotation, and validation_annoatation to the S3. Here is [guide](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html) to help you create S3 bucket.
 
-To create an S3 Bucket, navigate to the S3 storage services and select "Create Bucket". Enter the bucket name, our name for the first model that worked was "deeplens-roaddamagedetection". Be sure to select the region that is the same as the IAM role you are using, and where your notebook instance will be running. To correspond with the notebook instance we used, we created the following file structure in our S3 Bucket. We first made the folder "roaddamagedetection". Inside of roaddamagedetection folder, we hit "upload" and drag and dropped the four folders of data we created locally earlier: train, validation, train_annoation, and validation_annotation. We now have all the data for our custom model uploaded into an S3 Bucket.
+To create an S3 Bucket, navigate to the S3 storage services and select "Create Bucket". Enter the bucket name, our name for the first model that worked was "deeplens-roaddamagedetection". Be sure to select the region that is the same as the IAM role you are using, and where your notebook instance will be running.
+We first need to create a the folder "roaddamagedetection". 
+If you downloaded the dataset tar file from my link above then untar or unzip the file. You will see four folders rain, validation, train_annoation, and validation_annotation. Uploade thse folders inside "roaddamagedetection" folder.
 
-### 2. Setup AWS Sagemaker
+If you created the dataset mannually then upload your train, validation, train_annoation, and validation_annotation folders under "roaddamagedetection" folder. We now have all the data for our custom model uploaded into an S3 Bucket.
+
+###  Step 3. Setup AWS Sagemaker
 
 ### **Creating a notebook instnace for training**
 
@@ -235,7 +240,7 @@ To create a notebook instance for training, navigate to SageMaker from AWS servi
 
 It may take few minutes for notebook to spin-up. 
 
-### 3. Build the model
+### Step 4. Build the model
 
 You can use the jupyter notebook I already created. You can clone or download this git. 
 With Sagemaker you can access terminal. You can use terminal to install your own libraries or clone git hub.
@@ -312,7 +317,7 @@ At first a string of dots will show up and begin progressing, eventually a lot o
 Billable seconds: 556
 ```
 
-### 4. Convert model for Deeplens compatibility
+### Step 5. Convert model for Deeplens compatibility
 
 Now open up a terminal in the DeepLens. You can either ssh into the DeepLens or connect to a monitor and work with a keyboard and mouse. Once you have a terminal open, change directories into /opt/awscam/artifacts. If your project was sucessfully deployed you should see the same three files in there that were outputted by your SageMaker training job. The next step is to optimize the model and create the xml file our lambda function points to for inference. Feel free to remove the project from the device at this point, the files will remain loaded on the DeepLens and we will be redeploying the project later.
 
@@ -358,7 +363,7 @@ mo.optimize(model_name, input_height, input_width)
 By default this will generate an xml  and bin file with the name 'your_model_name'.xml and 'your_model_name'.bin in the /opt/awscam/artifacts directory. 
 
 
-### 5. Save model so that it can be used in Deeplens project.
+### 6. Save model so that it can be used in Deeplens project.
 
 You can compress (i.e. tar) these two files (.xml and .bin) and upload it to a S3 bucket.
 

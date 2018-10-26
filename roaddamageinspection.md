@@ -158,7 +158,6 @@ Give a description to the published version and choose Publish.
 
 5. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose MXNet as the model framework. Choose Import model.
 
-![](images/image8.gif)
 
 In the left navigation panel, choose Project. Then choose Create new project.
 

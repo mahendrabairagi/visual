@@ -220,7 +220,7 @@ You should now have a folder containing all the json files with annotations for 
 
 Now your dataset is ready for model building.
 
-### Step 2. Uploading to AWS
+### Step 2. Uploading dataset to AWS
 
 
 Create an AWS S3 bucket to store the dataset, Then copy folders train, validation, train_annotation, and validation_annoatation to the S3. Here is [guide](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html) to help you create S3 bucket.

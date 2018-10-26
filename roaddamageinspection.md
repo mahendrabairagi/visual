@@ -1,7 +1,7 @@
 ### Introduction
-In this lab we will walkthrough on detecting road surface damanage using SSD model and deploy it on Amazon Deeplens. 
+In this lab we will walkthrough detecting road surface damage using SSD model and deploy it on Amazon Deeplens. 
 
-Object detection is the process of identifying and localizing objects in an image. A typical object detection solution takes in an image as input and provides a bounding box on the image where an object of interest is, along with identifying what object the box encapsulates. We will be using this model developed in Tensorflow.  We will show you deploy this model
+Object detection is the process of identifying and localizing objects in an image. A typical object detection solution takes in an image as input and provides a bounding box on the image where an object of interest is, along with identifying what object the box encapsulates. We will be using this model developed using AWS Sagemaker.  We will show you how to deploy this model
 on Deeplens and do inferencing that will detect and classifiy road surface damange.
 
 ### The Definition of Road Damage
@@ -16,7 +16,7 @@ You will need to upload this model to your own s3 bucket later.
 
 ### Implementation steps
 
-The following sections walk you through the implementation steps in detail.
+The following sections walk you through the implementation steps.
 
 
 #### Step 1: Prerequisites
@@ -32,21 +32,21 @@ Open the AmazonS3 console.
 ![](images/image2.png)
 
 
-Create an Amazon S3 bucket in the Northern Virginia Region that ***must contain the term “deeplens”***. 
+Create an Amazon S3 bucket in the Northern Virginia Region that *** bucket nanme must start with the term *** “deeplens” ***. 
 
-The AWS DeepLens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-tfmodel-yourinitials
+The AWS Deeplens default role has permission only to access the bucket with the name containing ”deeplens”. You can name it deeplens-roaddamagedetection-yourinitials
 
-After the bucket is created, upload the tar file to the bucket.
+After the bucket is created, upload the downloaded model .tar file to the bucket.
 
 ### Create lambda function
 
-In this section, you’ll create a custom Lambda function that will be deployed as part of the AWS DeepLens deployment. 
+In this section, you’ll create a custom Lambda function that will be deployed as part of the AWS Deeplens deployment. 
 
 This Lambda function contains code to load the custom model that was downloaded from the S3 bucket mentioned previously. This allows you to perform local inferencing (object detection) without connecting back to the AWS Cloud.
 
 Open the AWS Lambda console.
 
-Create a new function from a blueprint, make sure to search for AWS Greengrass and select the Python version.
+Create a new function from a blueprint, make sure to search for AWS Greengrass and select the Python version (2.7).
 
 ![](images/image3.gif)
 
@@ -147,7 +147,7 @@ Give a description to the published version and choose Publish.
 ![](images/image6.gif)
 
 
-#### Setting up an AWS DeepLens project and deploying a custom TensorFlow object detection model
+#### Setting up an AWS DeepLens project and deploying a custom object detection model
 
 1. Open the AWS DeepLens console.
 
@@ -157,7 +157,7 @@ Give a description to the published version and choose Publish.
 
 4. In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
 
-5. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
+5. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose MXNet as the model framework. Choose Import model.
 
 ![](images/image8.gif)
 
@@ -175,7 +175,7 @@ Give your project a meaningful name and description, and then choose Add model.
 
 In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
 
-On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
+On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose Mxnet as the model framework. Choose Import model.
 
 
 Select the model that you imported earlier, and then choose Add model.
@@ -212,7 +212,6 @@ In this lab, you learned how to deploy a Road Surface Damage detection model to 
 
 
 ### Citation:
-If you use or find out our dataset useful, please cite our paper in the journal of Computer-Aided Civil and Infrastructure Engineering:
 
 Maeda, H., Sekimoto, Y., Seto, T., Kashiyama, T., & Omata, H. Road Damage Detection and Classification Using Deep Neural Networks with Smartphone Images. Computer‐Aided Civil and Infrastructure Engineering.
 

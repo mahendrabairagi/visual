@@ -2,5 +2,5 @@
 
 
 ### Lab1: Road anomaly detection:
-The labs walksthrough how to deploy road surface anomaly detection model on AWS Deeplens.
+This [lab](https://github.com/mahendrabairagi/visual/blob/master/roaddamageinspection.md) walksthrough how to deploy road surface anomaly detection model on AWS Deeplens.
 

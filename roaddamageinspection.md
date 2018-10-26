@@ -10,9 +10,9 @@ on Deeplens and do inferencing that will detect and classifiy road surface daman
 
 ## First download pre-built model
  
-Click link below to [download](https://s3-ap-northeast-1.amazonaws.com/mycityreport/trainedModels.tar.gz)
+Click link below to [download](https://s3.amazonaws.com/deeplens-roaddamage-user-2-8/roaddamagemodel.tar.gz)
 
-the download file has model files frozen graph of the model (ssd_inception_RoadDamageDetector.pb and ssd_mobilenet_RoadDamageDetector.pb ) and a label map for the model (crack_label_map.pbtxt). We will be using ssd_inception_RoadDamageDetector model.
+You will need to upload this model to your own s3 bucket later.
 
 ### Implementation steps
 
@@ -23,23 +23,8 @@ The following sections walk you through the implementation steps in detail.
 
 Make sure to register your AWS DeepLens device before you begin. You can follow this [link](https://docs.aws.amazon.com/deeplens/latest/dg/deeplens-getting-started-register.html) for a step-by-step guide to register the device.
 
-TensorFlow 1.5 is not yet installed on the device in Python 2.7. Open terminal of Deeplens or SSH to Deeplens and execute the following command to install TensorFlow.
 
-```python
-
-sudo pip2 install tensorflow==1.5.0
-
-```
-
-If above command doenst work then try following
-
-```python
-
-sudo pip install tensorflow==1.5.0
-
-```
-
-#### Step 2: Upload the tar file to Amazon S3
+#### Step 2: Upload the downloaded model file to Amazon S3
 
 In this section, you will upload the tar file to Amazon S3 so the AWS DeepLens service can deploy it to the DeepLens device for local inference.
 
@@ -76,101 +61,75 @@ In the function editor, copy and paste the following code into greengrassHelloWo
 ***Note: Do not rename the file or the function handler, leave everything at the default.
 
 ```python
-# Import packages
+
+#*****************************************************
+#                                                    *
+# Copyright 2018 Amazon.com, Inc. or its affiliates. *
+# All Rights Reserved.                               *
+#                                                    *
+#*****************************************************
+""" A sample lambda for object detection"""
+from threading import Thread, Event
 import os
-import cv2
+import json
 import numpy as np
-import tensorflow as tf
-import sys
-import greengrasssdk
-from threading import Timer
-import time
 import awscam
-from threading import Thread
+import cv2
+import greengrasssdk
 
-# Creating a greengrass core sdk client
-client = greengrasssdk.client('iot-data')
-
-# The information exchanged between IoT and cloud has 
-# a topic and a message body.
-# This is the topic that this code uses to send messages to cloud
-iotTopic = '$aws/things/{}/infer'.format(os.environ['AWS_IOT_THING_NAME'])
-modelPath = "/opt/awscam/artifacts"
-
-# Path to frozen detection graph .pb file, which contains the model that is used
-# for object detection.
-PATH_TO_CKPT = os.path.join(modelPath,'ssd_inception_RoadDamageDetector.pb')
-
-# List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = os.path.join(modelPath, 'crack_label_map.pbtxt')
 
 def greengrass_infinite_infer_run():
+    """ Entry point of the lambda function"""
     try:
-        # Load the TensorFlow model into memory.
-        detection_graph = tf.Graph()
-        with detection_graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
+        # This object detection model is implemented as single shot detector (ssd), since
+        # the number of labels is small we create a dictionary that will help us convert
+        # the machine labels to human readable labels.
+        model_type = 'ssd'
+        output_map = {1:'D00', 2: 'D01', 3:'D10', 4:'D11', 5:'D20', 6:'D40', 7:'D43', 8:'D44'}
 
-            sess = tf.Session(graph=detection_graph)
-            
-        client.publish(topic=iotTopic, payload="Model loaded")
+        # Create an IoT client for sending to messages to the cloud.
+        client = greengrasssdk.client('iot-data')
+        iot_topic = '$aws/things/{}/infer'.format(os.environ['AWS_IOT_THING_NAME'])
+        # Create a local display instance that will dump the image bytes to a FIFO
+        # file that the image can be rendered locally.
+
+        # The sample projects come with optimized artifacts, hence only the artifact
+        # path is required.
+        model_name = 'model_algo_1'
+        model_path = '/opt/awscam/artifacts/model_algo_1.xml'
+        # Load the model onto the GPU.
+        client.publish(topic=iot_topic, payload='Loading object detection model')
+        model = awscam.Model(model_path, {'GPU': 1})
+        client.publish(topic=iot_topic, payload='Object detection model loaded')
+        # Set the threshold for detection
+        detection_threshold = 0.60
+        # The height and width of the training set images
+        input_height = 600
+        input_width = 600
         
-        tensor_dict = {}
-        image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
-        for key in ['num_detections', 'detection_boxes', 'detection_scores','detection_classes']:
-            tensor_name = key + ':0'
-            tensor_dict[key] = detection_graph.get_tensor_by_name(tensor_name)
-        #load label map
-        label_dict = {}
-        with open(PATH_TO_LABELS, 'r') as f:
-                id=""
-                for l in (s.strip() for s in f):
-                        if "id:" in l:
-                                id = l.strip('id:').replace('\"', '').strip()
-                                label_dict[id]=''
-                        if "name:" in l:
-                                label_dict[id] = l.strip('name:').replace('\"', '').strip()
-
-        client.publish(topic=iotTopic, payload="Start inferencing")
+        # Do inference until the lambda is killed.
         while True:
+            # Get a frame from the video stream
             ret, frame = awscam.getLastFrame()
-            if ret == False:
-                raise Exception("Failed to get frame from the stream")
-            expanded_frame = np.expand_dims(frame, 0)
-            # Perform the actual detection by running the model with the image as input
-            output_dict = sess.run(tensor_dict, feed_dict={image_tensor: expanded_frame})
-            scores = output_dict['detection_scores'][0]
-            classes = output_dict['detection_classes'][0]
-            #only want inferences that have a prediction score of 50% and higher
-            msg = '{'
-            for idx, val in enumerate(scores):
-                if val > 0.5:
-                    msg += '"{}": {:.2f},'.format(label_dict[str(int(classes[idx]))], val*100)
-            msg = msg.rstrip(',')
-            msg +='}'
-            
-            client.publish(topic=iotTopic, payload = msg)
-            
-    except Exception as e:
-        msg = "Test failed: " + str(e)
-        client.publish(topic=iotTopic, payload=msg)
+            if not ret:
+                raise Exception('Failed to get frame from the stream')
+                
+            frame_resize = cv2.resize(frame, (input_height, input_width))
+            parsed_inference_results = model.parseResult(model_type,
+                                                         model.doInference(frame_resize))
+            # Dictionary to be filled with labels and probabilities for MQTT
+            cloud_output = {}
+            # Get the detected objects and probabilities
+            for obj in parsed_inference_results[model_type]:
+                if obj['prob'] > detection_threshold:
+                    # Store label and probability to send to cloud
+                    cloud_output[output_map[obj['label']]] = obj['prob']
+            # Set the next frame in the local display stream.
+            client.publish(topic=iot_topic, payload=json.dumps(cloud_output))
+    except Exception as ex:
+        client.publish(topic=iot_topic, payload='Error in object detection lambda: {}'.format(ex))
 
-    # Asynchronously schedule this function to be run again in 15 seconds
-    Timer(15, greengrass_infinite_infer_run).start()
-
-
-# Execute the function above
 greengrass_infinite_infer_run()
-
-
-# This is a dummy handler and will not be invoked
-# Instead the code above will be executed in an infinite loop for our example
-def function_handler(event, context):
-    return
 
 ```
 
@@ -194,13 +153,11 @@ Give a description to the published version and choose Publish.
 
 2. Make sure your DeepLens device is registered before you begin. You can follow this [link](https://youtu.be/j0DkaM4L6n4)  for a step-by-step guide to register the device.
 
-3. Make sure TensorFlow 1.5 is installed on the device for Python 2.7. Installation instructions are in prerequisites section.
+3. Make sure you are in the same region where you created the S3 bucket. At the time of writing, AWS DeepLens is only available in the Northern Virginia Region.
 
-4. Make sure you are in the same region where you created the S3 bucket. At the time of writing, AWS DeepLens is only available in the Northern Virginia Region.
+4. In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
 
-5. In the AWS DeepLens console, in the left navigation panel, choose Models. Then choose Import model.
-
-6. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
+5. On the Import model page, choose Externally trained model. In the Model artefact path, enter the S3 bucket and model path you created earlier. Give it a meaningful name and description, and make sure to choose TensorFlow as the model framework. Choose Import model.
 
 ![](images/image8.gif)
 

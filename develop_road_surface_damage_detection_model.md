@@ -11,7 +11,7 @@ In this lab I will walk you through how to create road surface anomaly detection
 5. Convert model for Deeplens compatibility
 6. Save model so that it can be used in Deeplens project.
 
-#### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. You can download it from here. If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
+### 1. Collect and annotate dataset **This is optional step ** I already have created dataset and its ready for you to use in Sagemaker. You can download it from here. If you want to create your own dataset then you can follow this step. Otherwise you can download the model and skip to step 2. Upload dataset to S3.
 
 Detecting road surface damage needs detecting multiple objects in the image frame. So we will need to build object detection model.
 
@@ -220,7 +220,7 @@ You should now have a folder containing all the json files with annotations for 
 
 Now your dataset is ready for model building.
 
-#### Step 2. Uploading to AWS
+### Step 2. Uploading to AWS
 
 
 Create an AWS S3 bucket to store the dataset, Then copy folders train, validation, train_annotation, and validation_annoatation to the S3. Here is [guide](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html) to help you create S3 bucket.
@@ -252,7 +252,7 @@ git clone https://github.com/mahendrabairagi/visual.git
 ```
 
 This notebook
-## Modifying the sample notebook
+### Modifying the sample notebook
 
 
 ### **Set Up**
@@ -362,7 +362,7 @@ mo.optimize(model_name, input_height, input_width)
 By default this will generate an xml  and bin file with the name 'your_model_name'.xml and 'your_model_name'.bin in the /opt/awscam/artifacts directory. 
 
 
-### 6. Save model so that it can be used in Deeplens project.
+### Step 6. Save model so that it can be used in Deeplens project.
 
 You can compress (i.e. tar) these two files (.xml and .bin) and upload it to a S3 bucket.
 

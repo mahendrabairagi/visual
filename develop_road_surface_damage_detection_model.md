@@ -250,7 +250,7 @@ It may take few minutes for notebook to spin-up.
 You can use the jupyter notebook I already created. You can clone or download this git. 
 With Sagemaker you can access terminal. You can use terminal to install your own libraries or clone git hub.
 To open terminal. On Sagemaker Jupyter notebook, click "New" on the left side, it will popup box
-![Sagemaker terminal](images/terminal.jpg)
+![Sagemaker terminal](images/terminal.png)
 Once terminal is open. Clone git as below
 ```
 git clone https://github.com/mahendrabairagi/visual.git
